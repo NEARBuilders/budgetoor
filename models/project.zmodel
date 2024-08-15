@@ -1,0 +1,26 @@
+import "./user.zmodel"  
+import "./task.zmodel"  
+import "./roleData.zmodel"  
+import "./staff.zmodel"
+
+model Project {
+
+    id           String     @id @default(uuid())
+    name         String
+    description  String?
+    timeEstimate String?
+    budgetBuffer String?
+    location     String?
+    benefits     String?
+    profitMargin String?
+    overview     String?
+    userId       String
+    user         User?      @relation(fields: [userId], references: [id], name: "user")
+
+    tasks        Task[]     @relation("project")
+    roles        RoleData[] @relation("project")
+    staffs       Staff[]    @relation("project")
+    dateCreated  DateTime   @default(now())
+    dateUpdated  DateTime   @updatedAt @default(now())
+    @@allow("all", true)
+}

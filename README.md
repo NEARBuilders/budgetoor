@@ -5,13 +5,17 @@
 
 <div align="center">
 
-<h1 style="font-size: 2.5rem; font-weight: bold;">Project Title</h1>
+<h1 style="font-size: 2.5rem; font-weight: bold;">Budgetoor</h1>
 
   <p>
-    <strong>This is a basic project template for new Build DAO projects</strong>
+    <strong>Agent to calculate number of work hours to estimate project budget.</strong>
   </p>
 
 </div>
+
+Estimating costs and runway for projects is hard. `Budgetoor` is an AI agent that calculates number of work hours based on requirements, staffing needed, location, and current salories in order to estimate project budget.
+
+This agent is part of [AI-PGF](https://www.aipgf.com/); AI that advances public goods funding. See [original idea](https://potlock.notion.site/Budgetoor-3bf58bc7ebfe4790a1dff1ff1c3ef376).
 
 <details>
   <summary>Table of Contents</summary>
@@ -27,10 +31,21 @@
 
 ## Getting Started
 
+<div style="color: red;">
+
+> ⚠️ **Important**<br/>Make sure the following tools are installed.
+
+<p align="center">
+
+<a target="_blank" href="https://www.docker.com/get-started/">![Docker Desktop Version](https://img.shields.io/badge/Docker%20Desktop-4.19.0-black?logo=docker)</a>
+<a target="_blank" href="https://nodejs.org/en">![Node.js version](https://img.shields.io/badge/Node.js-20.11.0-black?logo=nodedotjs)</a>
+<a target="_blank" href="https://pnpm.io/">![pnpm Version](https://img.shields.io/badge/pnpm-9.7.1-black?logo=pnpm)</a>
+</div>
+
 ### Installing dependencies
 
 ```bash
-npm install
+pnpm init
 ```
 
 ### Running the app
@@ -38,7 +53,7 @@ npm install
 First, run the development server:
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
@@ -46,13 +61,13 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the r
 ### Building for production
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 ### Running tests
 
 ```bash
-npm run test
+pnpm run test
 ```
 
 See the full [testing guide](./playwright-tests/README.md).
@@ -64,11 +79,11 @@ Contributions are what make the open source community such an amazing place to l
 If you're interested in contributing to this project, please read the [contribution guide](./CONTRIBUTING).
 
 <div align="right">
-<a href="https://nearbuilders.org" target="_blank">
-<img
-  src="https://builders.mypinata.cloud/ipfs/QmWt1Nm47rypXFEamgeuadkvZendaUvAkcgJ3vtYf1rBFj"
-  alt="Near Builders"
-  height="40"
-/>
-</a>
+  <a href="https://nearbuilders.org" target="_blank">
+    <img
+      src="https://builders.mypinata.cloud/ipfs/QmWt1Nm47rypXFEamgeuadkvZendaUvAkcgJ3vtYf1rBFj"
+      alt="Near Builders"
+      height="40"
+    />
+  </a>
 </div>

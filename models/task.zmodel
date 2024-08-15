@@ -1,0 +1,16 @@
+
+ import "./project.zmodel"  
+
+model Task {
+
+    id        String    @id @default(uuid())  
+    name      String      
+    description String?      
+    duration  Float?       
+    projectId String      
+    project   Project?   @relation(fields: [projectId], references: [id], name:"project")  
+
+dateCreated DateTime @default(now())
+      dateUpdated DateTime @updatedAt  @default(now())
+      @@allow("all", true)
+}
