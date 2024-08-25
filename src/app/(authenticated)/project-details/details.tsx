@@ -7,7 +7,6 @@ import { Typography, Card } from "antd";
 const { Title, Paragraph, Text } = Typography;
 
 export default function ProjectDetailsComponent({ projectId }) {
-  console.log("calleeedd", projectId);
   const { data: project } = Api.project.findUnique.useQuery({
     where: { id: projectId },
     include: { user: true },
