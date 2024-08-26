@@ -49,7 +49,7 @@ export default function ProjectDetailsPage() {
 
       await updateProject({
         where: { id: projectCreated.id },
-        data: { overview: response?.overview },
+        data: { overview: response?.overview, csv: response.csv },
       });
       setProjectId(projectCreated.id);
       setLoading(false);

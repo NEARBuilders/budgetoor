@@ -84,6 +84,7 @@ model Project {
   benefits     String?
   profitMargin String?
   overview     String?
+  csv          String?
   userId       String
   user         User?      @relation(fields: [userId], references: [id], name: "user")
   tasks        Task[]     @relation("project")

@@ -3,8 +3,10 @@
 import dayjs from "dayjs";
 import { Api } from "@/core/trpc";
 import { PageLayout } from "@/designSystem/layouts/Page.layout";
-import { Typography, Card } from "antd";
+import { Typography, Card, Flex } from "antd";
 const { Title, Paragraph, Text } = Typography;
+import Markdown from "react-markdown";
+import { DownloadOutlined } from "@ant-design/icons";
 
 export default function ProjectDetailsComponent({ projectId }) {
   const { data: project } = Api.project.findUnique.useQuery({
@@ -12,31 +14,53 @@ export default function ProjectDetailsComponent({ projectId }) {
     include: { user: true },
   });
 
+  // Function to handle CSV download
+  const handleDownload = () => {
+    const csvContent = project.csv ?? project.overview;
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `${project.name}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
-    <PageLayout layout="narrow">
+    <div style={{ marginTop: 10 }}>
       {project && (
         <Card title="Project Overview">
-          <Title level={4}>{project.name}</Title>
-          <Text>Description: {project.description}</Text>
-          <br />
-          <Text>Overview: {project.overview}</Text>
-          <br />
-          <Text>Time Estimate: {project.timeEstimate?.toString()} hours</Text>
-          <br />
-          <Text>Budget Buffer: ${project.budgetBuffer?.toString()}</Text>
-          <br />
-          <Text>Profit Margin: {project.profitMargin?.toString()}%</Text>
-          <br />
+          <Flex gap="middle" justify="space-between" align="center">
+            <Title level={4}>{project.name}</Title>
+            <DownloadOutlined
+              style={{ fontSize: 20 }}
+              onClick={handleDownload}
+            />
+          </Flex>
           <Text>
-            Date Created: {dayjs(project.dateCreated).format("MMMM D, YYYY")}
+            <b> Description:</b> {project.description}
           </Text>
           <br />
           <Text>
-            Date Updated: {dayjs(project.dateUpdated).format("MMMM D, YYYY")}
+            <b> Overview:</b>
+            <Markdown>{project.overview}</Markdown>
+          </Text>
+          <br />
+
+          <Text>
+            <b> Date Created: </b>
+            {dayjs(project.dateCreated).format("MMMM D, YYYY")}
+          </Text>
+          <br />
+          <Text>
+            <b> Date Updated: </b>
+            {dayjs(project.dateUpdated).format("MMMM D, YYYY")}
           </Text>
           <br />
         </Card>
       )}
-    </PageLayout>
+    </div>
   );
 }
