@@ -35,9 +35,12 @@ export default function ProjectDetailsPage() {
           description: values.description,
           timeEstimate: values.timeEstimate,
           budgetBuffer: values.budgetBuffer,
+          task_breakdown: values.task_breakdown,
+          roles_seniority: values.roles_seniority,
           location: values.location,
+          payroll: values.payroll,
           profitMargin: values.profitMargin,
-          userId: "20eebdd2-d798-47ca-a1e1-9dc593df7037",
+          userId: user.id,
         },
       });
       enqueueSnackbar("Project created successfully", { variant: "success" });
@@ -72,7 +75,7 @@ export default function ProjectDetailsPage() {
           label="Project Name"
           rules={[{ required: true, message: "Please enter the project name" }]}
         >
-          <Input.TextArea placeholder="Enter project name" />
+          <Input.TextArea placeholder="Enter the name of your project (e.g., 'Marketing Campaign Revamp')" />
         </Form.Item>
         <Form.Item
           name="description"
@@ -81,7 +84,7 @@ export default function ProjectDetailsPage() {
             { required: true, message: "Please enter the project details" },
           ]}
         >
-          <Input.TextArea placeholder="Enter project details" />
+          <Input.TextArea placeholder="Describe the project objectives and scope (e.g., 'Redesign the company's website to improve user experience and conversion rates')" />
         </Form.Item>
         <Form.Item
           name="timeEstimate"
@@ -90,7 +93,7 @@ export default function ProjectDetailsPage() {
             { required: true, message: "Please enter the time estimates" },
           ]}
         >
-          <Input.TextArea placeholder="Enter time estimates" />
+          <Input.TextArea placeholder="Estimate the total time needed for the project (e.g., '80 hours over 4 weeks')" />
         </Form.Item>
         <Form.Item
           name="budgetBuffer"
@@ -99,7 +102,7 @@ export default function ProjectDetailsPage() {
             { required: true, message: "Please enter the budget buffers" },
           ]}
         >
-          <Input.TextArea placeholder="Enter budget buffers" />
+          <Input.TextArea placeholder="Specify any additional budget for unforeseen expenses (e.g., '10% of total project cost')" />
         </Form.Item>
         <Form.Item
           name="task_breakdown"
@@ -108,7 +111,7 @@ export default function ProjectDetailsPage() {
             { required: true, message: "Please enter the task breakdown" },
           ]}
         >
-          <Input.TextArea placeholder="Enter task breakdown" />
+          <Input.TextArea placeholder="List the key tasks required to complete the project (e.g., 'Research, Design, Development, Testing')" />
         </Form.Item>
         <Form.Item
           name="roles_seniority"
@@ -117,21 +120,21 @@ export default function ProjectDetailsPage() {
             { required: true, message: "Please enter the roles seniority" },
           ]}
         >
-          <Input.TextArea placeholder="Enter roles seniority" />
+          <Input.TextArea placeholder="Detail the roles and experience levels required (e.g., 'Senior Developer, Junior Designer')" />
         </Form.Item>
         <Form.Item
           name="location"
           label="Location"
           rules={[{ required: true, message: "Please enter the location" }]}
         >
-          <Input placeholder="Enter location" />
+          <Input placeholder="Specify the location of the team members (e.g., 'Remote, US-based')" />
         </Form.Item>
         <Form.Item
           name="payroll"
           label="Payroll"
           rules={[{ required: true, message: "Please enter the payroll" }]}
         >
-          <Input.TextArea placeholder="Enter payroll" />
+          <Input.TextArea placeholder="Provide the payroll details, including rates and benefits (e.g., 'Hourly rate: $50, Total: $4,000')" />
         </Form.Item>
         <Form.Item
           name="profitMargin"
@@ -140,7 +143,7 @@ export default function ProjectDetailsPage() {
             { required: true, message: "Please enter the profit margins" },
           ]}
         >
-          <Input.TextArea placeholder="Enter profit margins" />
+          <Input.TextArea placeholder="Enter your desired profit margin (e.g., '15% of total project cost')" />
         </Form.Item>
         <Form.Item>
           <Button loading={loading} type="primary" htmlType="submit" block>
