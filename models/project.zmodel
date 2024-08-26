@@ -10,6 +10,9 @@ model Project {
     description  String?
     timeEstimate String?
     budgetBuffer String?
+    task_breakdown String?
+    roles_seniority String?
+    payroll      String?
     location     String?
     benefits     String?
     profitMargin String?
