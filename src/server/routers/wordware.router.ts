@@ -5,6 +5,7 @@ import axios from 'axios'
 import { z } from 'zod'
 
 const API_KEY = process.env.WORDWARE_API_KEY
+const API_URL = process.env.WORDWARE_API_URL
 
 export const WordwareRouter = Trpc.createRouter({
   handleCurlRequest: Trpc.procedure
@@ -36,7 +37,7 @@ export const WordwareRouter = Trpc.createRouter({
       }
 
       const response = await axios.post(
-        'https://app.wordware.ai/api/released-app/8c7b882d-fdf1-448d-b2a8-3873df0f38af/run',
+        API_URL,
         bodyFormatted,
         {
           headers: {
