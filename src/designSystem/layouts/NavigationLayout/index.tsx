@@ -32,21 +32,9 @@ export const NavigationLayout: React.FC<Props> = ({ children }) => {
     },
 
     {
-      key: '/project-details',
-      label: 'Project Details',
-      onClick: () => goTo('/project-details'),
-    },
-
-    {
-      key: '/export',
-      label: 'Export',
-      onClick: () => goTo('/export'),
-    },
-
-    {
-      key: '/integration',
-      label: 'Integration',
-      onClick: () => goTo('/integration'),
+      key: '/new',
+      label: 'New Project',
+      onClick: () => goTo('/new'),
     },
   ]
 

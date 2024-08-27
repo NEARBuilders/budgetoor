@@ -1,19 +1,15 @@
 "use client";
 
-import dayjs from "dayjs";
 import { useUserContext } from "@/core/context";
 import { Api } from "@/core/trpc";
 import { PageLayout } from "@/designSystem/layouts/Page.layout";
-import { Button, Form, Input, Typography, Card, Spin } from "antd";
-import { useParams, useRouter } from "next/navigation";
+import { Button, Form, Input, Typography } from "antd";
 import { useSnackbar } from "notistack";
-import ProjectDetailsComponent from "./details";
 import { useState } from "react";
+import ProjectDetailsComponent from "./details";
 const { Title, Paragraph, Text } = Typography;
 
 export default function ProjectDetailsPage() {
-  const router = useRouter();
-  const params = useParams<any>();
   const { user } = useUserContext();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -43,7 +39,6 @@ export default function ProjectDetailsPage() {
           userId: user.id,
         },
       });
-      enqueueSnackbar("Project created successfully", { variant: "success" });
 
       // Call the wordware router to handle the cURL request
       const response = await handleCurlRequest({
@@ -54,6 +49,8 @@ export default function ProjectDetailsPage() {
         where: { id: projectCreated.id },
         data: { overview: response?.overview, csv: response.csv },
       });
+
+      enqueueSnackbar("Project created successfully", { variant: "success" });
       setProjectId(projectCreated.id);
       setLoading(false);
     } catch (error) {
@@ -64,7 +61,7 @@ export default function ProjectDetailsPage() {
 
   return (
     <PageLayout layout="narrow">
-      <Title level={2}>Project Details</Title>
+      <Title level={2}>New Project</Title>
       <Paragraph>
         Please fill out the form below to provide necessary information for
         budget estimation.
@@ -75,7 +72,7 @@ export default function ProjectDetailsPage() {
           label="Project Name"
           rules={[{ required: true, message: "Please enter the project name" }]}
         >
-          <Input.TextArea placeholder="Enter the name of your project (e.g., 'Marketing Campaign Revamp')" />
+          <Input placeholder="Enter the name of your project (e.g., 'Marketing Campaign Revamp')" />
         </Form.Item>
         <Form.Item
           name="description"
@@ -84,7 +81,10 @@ export default function ProjectDetailsPage() {
             { required: true, message: "Please enter the project details" },
           ]}
         >
-          <Input.TextArea placeholder="Describe the project objectives and scope (e.g., 'Redesign the company's website to improve user experience and conversion rates')" />
+          <Input.TextArea
+            placeholder="Describe the project objectives and scope (e.g., 'Redesign the company's website to improve user experience and conversion rates')"
+            autoSize={{ minRows: 8 }}
+          />
         </Form.Item>
         <Form.Item
           name="timeEstimate"
@@ -111,7 +111,7 @@ export default function ProjectDetailsPage() {
             { required: true, message: "Please enter the task breakdown" },
           ]}
         >
-          <Input.TextArea placeholder="List the key tasks required to complete the project (e.g., 'Research, Design, Development, Testing')" />
+          <Input.TextArea placeholder="List the key tasks required to complete the project (e.g., 'Research, Design, Development, Testing')" autoSize={{ minRows: 4 }} />
         </Form.Item>
         <Form.Item
           name="roles_seniority"
