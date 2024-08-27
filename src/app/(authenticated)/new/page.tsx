@@ -64,7 +64,7 @@ export default function ProjectDetailsPage() {
       <Title level={2}>New Project</Title>
       <Paragraph>
         Please fill out the form below to provide necessary information for
-        budget estimation.
+        budget estimation. If you don't have an answer, feel free to write "figure it out".
       </Paragraph>
       <Form form={form} layout="vertical" onFinish={handleFormSubmit}>
         <Form.Item

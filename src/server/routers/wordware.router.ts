@@ -6,6 +6,7 @@ import { z } from 'zod'
 
 const API_KEY = process.env.WORDWARE_API_KEY
 const API_URL = process.env.WORDWARE_API_URL
+const API_VERSION = process.env.WORDWARE_API_VERSION
 
 export const WordwareRouter = Trpc.createRouter({
   handleCurlRequest: Trpc.procedure
@@ -33,7 +34,7 @@ export const WordwareRouter = Trpc.createRouter({
           payroll: body.payroll,
           profit_margins: body.profitMargin,
         },
-        version: '^1.0',
+        version: API_VERSION,
       }
 
       const response = await axios.post(

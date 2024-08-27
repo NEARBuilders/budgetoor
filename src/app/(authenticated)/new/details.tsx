@@ -1,12 +1,10 @@
 "use client";
 
-import dayjs from "dayjs";
 import { Api } from "@/core/trpc";
-import { PageLayout } from "@/designSystem/layouts/Page.layout";
-import { Typography, Card, Flex } from "antd";
-const { Title, Paragraph, Text } = Typography;
-import Markdown from "react-markdown";
 import { DownloadOutlined } from "@ant-design/icons";
+import { Card, Flex, Typography } from "antd";
+import Markdown from "react-markdown";
+const { Title, Text } = Typography;
 
 export default function ProjectDetailsComponent({ projectId }) {
   const { data: project } = Api.project.findUnique.useQuery({
@@ -16,7 +14,7 @@ export default function ProjectDetailsComponent({ projectId }) {
 
   // Function to handle CSV download
   const handleDownload = () => {
-    const csvContent = project.csv ?? project.overview;
+    const csvContent = project.csv;
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
 
@@ -29,7 +27,7 @@ export default function ProjectDetailsComponent({ projectId }) {
   };
 
   return (
-    <div style={{ marginTop: 10 }}>
+    <div style={{ marginTop: 20 }}>
       {project && (
         <Card title="Project Overview">
           <Flex gap="middle" justify="space-between" align="center">
@@ -39,26 +37,16 @@ export default function ProjectDetailsComponent({ projectId }) {
               onClick={handleDownload}
             />
           </Flex>
+          <br />
           <Text>
             <b> Description:</b> {project.description}
           </Text>
           <br />
+          <br />
           <Text>
-            <b> Overview:</b>
+            <b> Budget Estimate:</b>
             <Markdown>{project.overview}</Markdown>
           </Text>
-          <br />
-
-          <Text>
-            <b> Date Created: </b>
-            {dayjs(project.dateCreated).format("MMMM D, YYYY")}
-          </Text>
-          <br />
-          <Text>
-            <b> Date Updated: </b>
-            {dayjs(project.dateUpdated).format("MMMM D, YYYY")}
-          </Text>
-          <br />
         </Card>
       )}
     </div>
