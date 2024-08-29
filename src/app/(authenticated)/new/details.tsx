@@ -39,12 +39,6 @@ export default function ProjectDetailsComponent({ projectId }) {
           </Flex>
           <br />
           <Text>
-            <b> Description:</b> {project.description}
-          </Text>
-          <br />
-          <br />
-          <Text>
-            <b> Budget Estimate:</b>
             <Markdown>{project.overview}</Markdown>
           </Text>
         </Card>

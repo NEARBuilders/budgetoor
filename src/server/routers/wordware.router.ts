@@ -1,8 +1,9 @@
 // src/server/routers/wordware.router.ts
 
-import { Trpc } from '@/core/trpc/server'
-import axios from 'axios'
-import { z } from 'zod'
+import { Trpc } from '@/core/trpc/server';
+import axios from 'axios';
+import { Readable } from 'stream';
+import { z } from 'zod';
 
 const API_KEY = process.env.WORDWARE_API_KEY
 const API_URL = process.env.WORDWARE_API_URL
@@ -16,11 +17,11 @@ export const WordwareRouter = Trpc.createRouter({
       }),
     )
     .mutation(async ({ input }) => {
-      const { body } = input
+      const { body } = input;
 
       if (!API_KEY) {
-        console.error('WardWare is not started')
-        return
+        console.error('WardWare is not started');
+        return;
       }
 
       const bodyFormatted = {
@@ -35,46 +36,64 @@ export const WordwareRouter = Trpc.createRouter({
           profit_margins: body.profitMargin,
         },
         version: API_VERSION,
-      }
+      };
 
-      const response = await axios.post(
-        API_URL,
-        bodyFormatted,
-        {
-          headers: {
-            Authorization: `Bearer ${API_KEY}`,
-            'Content-Type': 'application/json',
+      try {
+        const response = await axios.post(
+          API_URL,
+          bodyFormatted,
+          {
+            headers: {
+              Authorization: `Bearer ${API_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            responseType: 'stream',
           },
-        },
-      )
+        );
 
-      if (response?.status !== 200) {
-        console.error('fail to retrieve')
-      }
 
-      const responseData = response?.data
-      const lines = responseData.split('\n')
-      let completeObject: any = null
+        return new Promise((resolve, reject) => {
+          const stream = response.data as Readable;
+          let rawData = '';
 
-      for (const line of lines) {
-        try {
-          const chunk = JSON.parse(line)
-          if (chunk.type === 'chunk' && chunk.value.state === 'complete') {
-            completeObject = chunk.value.output
-            break
-          }
-        } catch (error) {
-          // Handle or log the error as necessary
-          console.error('Failed to parse JSON:', error)
-        }
-      }
+          stream.on('data', (chunk) => {
+            rawData += chunk.toString();
+          });
 
-      if (completeObject) {
-        console.log('Complete Object:', completeObject)
+          stream.on('end', () => {
+            const lines = rawData.split('\n').filter(line => line.trim());
+            let completeObject: any = null;
 
-        return { overview: completeObject.overview, csv: completeObject.CSV }
-      } else {
-        console.log('No complete state found.')
+            for (const line of lines) {
+              try {
+                const parsedChunk = JSON.parse(line);
+                if (parsedChunk.type === 'chunk' && parsedChunk.value.state === 'complete') {
+                  completeObject = parsedChunk.value.output;
+                  break;
+                }
+              } catch (error) {
+                console.error('Failed to parse JSON:', error);
+              }
+            }
+
+            if (completeObject) {
+              console.log('Complete Object:', completeObject);
+              resolve({ overview: completeObject.overview, csv: completeObject.CSV });
+            } else {
+              console.log('No complete state found. Raw data:', rawData);
+              resolve({ error: 'No complete state found', rawData });
+            }
+          });
+
+          stream.on('error', (error) => {
+            console.error('Stream error:', error);
+            reject(error);
+          });
+        });
+
+      } catch (error) {
+        console.error('Request failed:', error);
+        throw error;
       }
     }),
-})
+});
