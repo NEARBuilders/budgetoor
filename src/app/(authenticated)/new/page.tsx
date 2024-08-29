@@ -43,7 +43,7 @@ export default function ProjectDetailsPage() {
       // Call the wordware router to handle the cURL request
       const response = await handleCurlRequest({
         body: values,
-      });
+      }) as { overview: string; csv: string };
 
       await updateProject({
         where: { id: projectCreated.id },
