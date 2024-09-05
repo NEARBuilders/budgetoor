@@ -32,7 +32,7 @@ export default function HomePage() {
           <Card
             title="Past Projects"
             bordered={false}
-            extra={<DollarCircleOutlined />}
+           
           >
             {projectsLoading ? (
               <Spin />

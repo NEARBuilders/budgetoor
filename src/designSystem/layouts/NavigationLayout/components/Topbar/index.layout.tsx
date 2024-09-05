@@ -82,14 +82,14 @@ export const Topbar: React.FC<Props> = ({
                   </div>
                 )}
 
-                <Avatar
+                {/* <Avatar
                   src={user?.pictureUrl}
                   size="default"
                   onClick={() => router.push('/profile')}
                   style={{ cursor: 'pointer' }}
                 >
                   {Utility.stringToInitials(user?.name)}
-                </Avatar>
+                </Avatar> */}
               </>
             )}
           </Flex>

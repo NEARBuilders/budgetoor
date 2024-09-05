@@ -69,12 +69,22 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   return (
     <UserContext.Provider
       value={{
-        user,
+        user: {
+          id: '639bb330-5630-4375-af59-b01f37d8c118',
+          name: 'John Doe',
+          email: 'johndoe@example.com',
+          pictureUrl: 'https://example.com/picture.jpg',
+          stripeCustomerId: 'cus_123abc',
+          password: 'securepassword123',
+          dateCreated: new Date(),
+          dateUpdated: new Date(),
+          roles:[]
+      },
         checkRole,
         refetch,
-        authenticationStatus: status,
-        isLoggedIn,
-        isLoading,
+        authenticationStatus: 'authenticated',
+        isLoggedIn : true,
+        isLoading: false,
       }}
     >
       {children}

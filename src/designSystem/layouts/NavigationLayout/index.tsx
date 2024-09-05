@@ -39,11 +39,11 @@ export const NavigationLayout: React.FC<Props> = ({ children }) => {
   ]
 
   let itemsMobile = [
-    {
-      key: 'profile',
-      label: 'Profile',
-      onClick: () => goTo('/profile'),
-    },
+    // {
+    //   key: 'profile',
+    //   label: 'Profile',
+    //   onClick: () => goTo('/profile'),
+    // },
     ...itemsTopbar,
     ...itemsLeftbar,
   ]
