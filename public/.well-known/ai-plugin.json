@@ -1,0 +1,148 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Budgetoor API",
+    "description": "API for calculating number of work hours based on requirements, staffing needed, location, and current salories in order to estimate project budget.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://budgetoor.vercel.app"
+    }
+  ],
+  "x-mb": {
+    "account-id": "mintbase.near",
+    "assistant": {
+      "name": "Budgetoor Assistant",
+      "description": "Assistant for using the Budgetoor API to estimate budgets.",
+      "instructions": "You are an assistant that helps users interact with Budgetoor API. You can calculate number of work hours to estimate project budget. Generated budgets can be presented to the user in markdown and csv formats.",
+      "tools": [
+        {
+          "type": "generate-transaction"
+        }
+      ]
+    }
+  },
+  "paths": {
+    "/api/budget": {
+      "post": {
+        "description": "Calculate number of work hours based on requirements, staffing needed, location, and current salaries in order to estimate project budget.",
+        "operationId": "getBudget",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Project name"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Project description and objectives"
+                  },
+                  "timeEstimate": {
+                    "type": "string",
+                    "description": "Estimated total time needed for the project"
+                  },
+                  "budgetBuffer": {
+                    "type": "string",
+                    "description": "Additional budget for unforeseen expenses"
+                  },
+                  "task_breakdown": {
+                    "type": "string",
+                    "description": "List of key tasks required to complete the project"
+                  },
+                  "roles_seniority": {
+                    "type": "string",
+                    "description": "Roles and experience levels required"
+                  },
+                  "location": {
+                    "type": "string",
+                    "description": "Location of team members"
+                  },
+                  "payroll": {
+                    "type": "string",
+                    "description": "Payroll details, including rates and benefits"
+                  },
+                  "profitMargin": {
+                    "type": "string",
+                    "description": "Desired profit margin"
+                  }
+                },
+                "required": [
+                  "name",
+                  "description",
+                  "timeEstimate",
+                  "budgetBuffer",
+                  "task_breakdown",
+                  "roles_seniority",
+                  "location",
+                  "payroll",
+                  "profitMargin"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Budget estimation calculated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "overview": {
+                      "type": "string",
+                      "description": "Markdown formatted overview of the budget estimation"
+                    },
+                    "csv": {
+                      "type": "string",
+                      "description": "CSV formatted detailed breakdown of the budget estimation"
+                    }
+                  },
+                  "required": ["overview", "csv"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. Invalid input data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message describing the issue with the input data"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message describing the internal server issue"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

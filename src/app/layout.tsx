@@ -1,23 +1,22 @@
-'use client'
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
 
-import { WorkspaceProvider } from '@/.marblism/workspace'
-import { UserProvider } from '@/core/context'
-import { TRPCProvider } from '@/core/trpc'
-import { DesignSystemProvider } from '@/designSystem'
-import { SessionProvider } from 'next-auth/react'
+const inter = Inter({ subsets: ["latin"] });
 
-type Props = { children: React.ReactNode }
+export const metadata: Metadata = {
+  title: "Budgetoor",
+  description: "Budgetoor is a simple budgeting AI Agent",
+};
 
-export default function RootLayout({ children }: Props) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <DesignSystemProvider>
-      <SessionProvider>
-        <TRPCProvider>
-          <WorkspaceProvider>
-            <UserProvider>{children}</UserProvider>
-          </WorkspaceProvider>
-        </TRPCProvider>
-      </SessionProvider>
-    </DesignSystemProvider>
-  )
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
+    </html>
+  );
 }
