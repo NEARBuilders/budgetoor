@@ -85,6 +85,7 @@ function ProjectDetailsComponent({ project }) {
                 const match = /language-(\w+)/.exec(className || "");
                 return !inline && match ? (
                   <SyntaxHighlighter
+                    // @ts-ignore
                     style={tomorrow}
                     language={match[1]}
                     PreTag="div"
