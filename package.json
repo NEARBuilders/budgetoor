@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "fmt": "prettier --write '**/*.{js,jsx,ts,tsx,json}'",
+    "fmt:check": "prettier --check '**/*.{js,jsx,ts,tsx,json}'"
   },
   "dependencies": {
     "@elysiajs/swagger": "^1.0.5",
@@ -20,7 +22,6 @@
     "react-dom": "^18",
     "react-markdown": "^9.0.1",
     "react-syntax-highlighter": "^15.5.0",
-    "solid": "link:@heroicons/react/solid",
     "stream": "^0.0.3",
     "zod": "^3.23.8"
   },
@@ -33,6 +34,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",
+    "prettier": "^3.3.3",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
